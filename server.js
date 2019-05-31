@@ -19,18 +19,20 @@ app.use(bodyParser.json());
 app.use(session({
       secret: process.env.SESSION_SECRET || 'Double secrete probation',
       resave: false,
-      saveUninitialized: false }));
+      saveUninitialized: false })
+      );
 app.use(helmet());
 
-// ------------ WEB ROUTES ------------
 app.get('/', (req, res) => { res.send('<p>Hi</p>'); });
 
-// ------------ API ROUTES ------------
 const ctrl = require('./controllers');
-// auth
+
 app.use('/api/v1/auth', ctrl.auth);
-// users
+
 app.use('/api/v1/users', ctrl.users);
 
-// ------------ START SERVER ------------
+app.use('/api/v1/project', ctrl.project);
+
+app.use('/api/v1/tool', ctrl.tool);
+
 app.listen(PORT, () => {console.log(`Server running on port ${PORT}`)});
