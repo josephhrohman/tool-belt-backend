@@ -19,7 +19,7 @@ app.use(session({
       saveUninitialized: false }));
 
 // ------------ WEB ROUTES ------------
-app.get('/', (req, res) => { res.send('<p>api page</p>'); });
+app.get('/', (req, res) => { res.send('<p>Hi</p>'); });
 
 // ------------ API ROUTES ------------
 // // users
