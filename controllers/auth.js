@@ -1,60 +1,75 @@
 const express = require('express'),
-      bcrypt = require('bcryptjs'),
       router = express.Router(),
-      db = require('../models');
+      db = require('../models'),
+      bcrypt = require('bcryptjs');
 
-router.post('/register', async (req, res) => {
+router.post('/register', (req, res) => {
   const errors = [];
 
-  if (!req.body.name) errors.push({message: 'Please enter your name'});
-  if (!req.body.email) errors.push({message: 'Please enter a correct email or password'});
-  if (!req.body.password) errors.push({message: 'Please enter your password'});
-  if (!req.body.password !== req.body.password2) errors.push({message: 'Your passwords do not match'});
+  if (!req.body.name) errors.push({message: 'Please enter your name.'});
+  if (!req.body.email) errors.push({message: 'Please enter your email.'});
+  if (!req.body.password) errors.push({message: 'Please enter your password.'});
+  if (req.body.password !== req.body.password2) errors.push({message: 'Your passwords do not match.'});
 
-  if (errors.length) return res.return(400).json({status: 400, erros});
+  if (errors.length > 0) return res.status(400).send(errors);
 
-  try {
-    const existingUser = await db.User.findOne({email: req.body.email});
+  db.User.findOne({email: req.body.email}, (err, foundUser) =>{
+    if (foundUser) return res.status(400).send({message: 'This email is already in use.'});
 
-    if (existingUser) return res.status(400).json({status: 400, errors: [{message: 'Email address has already been registered'}]});
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) return res.status(400).json({user: req.body, error: 'Something went wrong. Please try again.'});
 
-  } catch {
+      bcrypt.hash(req.body.password, salt, (err, hash) => {
+        if (err) return res.json({user: req.body, error: 'Something went wrong. Please try again.'});
 
-    const passwordHasher = bcrypt.hashSync(req.body.password, 10);
-    const newUser = {};
-    newUser.name = req.body.name;
-    newUser.email = req.body.email;
-    newUser.password = passwordHasher;
+        const newUser = {
+          name: req.body.name,
+          email: req.body.email,
+          city: req.body.city,
+          password: hash
+        }
 
-    const savedUser = await db.User.create(newUser);
-    return res.send(500).json({status: 500, errors: err});
+        db.User.create(newUser, (err, newUser) => {
+          if (err) return res.json({user: req.body, error: 'Something went wrong. Please try again.'});
 
-  }
+          return res.status(200).send('User created successfully.');
+          });
+      });
+    });
+  });
 });
 
-router.post('/login', async (req, res) => {
-  if (!req.body.email || !req.body.password) return res.status(400).json({status: 400, error: 'Please enter the correct login information'})
+router.post('/login', (req, res) => {
 
-  try {
-    const findUser = await db.User.findOne({email: req.body.email});
-    if (!req.body.email) return res.status(400).json({status: 400, error: 'Please enter the correct login information'});
-
-    const matchPassword = db.bcrypt.compareSync(req.body.password, findUser.password);
-    if (!req.body.password) return res.status(400).json({status: 400, error: 'Please enter the correct login information'});
-
-    req.session.confirmedUser = findUser._id;
-    res.status(200).json({status: 200, confirmedUser = findUser._id});
-
-  } catch {
-    return res.status(500).json({status: 500, errors: 'Something went wrong on our end.  Hang tight.'});
-
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).send('Please enter your username and password.');
   }
+
+  db.User.findOne({email: req.body.email}, (err, foundUser) => {
+    if (err) return res.status(400).send('Username or password is incorrect.');
+    if (!foundUser) return res.status(400).send('Username or password is incorrect.');
+
+    bcrypt.compare(req.body.password, foundUser.password, (err, isMatch) => {
+      if (err) return res.status(400).send('There was a problem. Please try again.');
+
+      if (isMatch) {
+        req.session.loggedIn = true;
+        req.session.currentUser = {
+          id: foundUser._id,
+          name: foundUser.name,
+          email: foundUser.email
+        };
+        return res.send(foundUser._id);
+      } else {
+        return res.status(400).send('Username or password is incorrect.');
+      }
+    });
+  });
 });
 
 router.post('/logout', (req, res) => {
   req.session.destroy(err => {
-    if (err) return res.status(500).json({status: 500, errors: 'Something went wrong on our end.  Hang tight.'});
-    res.clearCoockie('connect.sid').json({status: 200, message: 'You\'ve Logged Out'});
+    if (err) return res.status(400).send('Username or password is incorrect.');
   });
 });
 

@@ -7,7 +7,6 @@ mongoose.connect(DB_URL, { useNewUrlParser: true, useFindAndModify: false, useCr
 
 module.exports = {
   User: require('./user'),
-  Porject: require('./project'),
+  Project: require('./project'),
   Tool: require('./tool'),
-  Step: require('./step'),
 };

@@ -8,8 +8,6 @@ const ProjectSchema = new Schema ({
     type: Date,
     default: Date.now
   },
-  steps: [Step.schema]
-  // Author?
 });
 
 const Project = mongoose.model('Project', ProjectSchema);

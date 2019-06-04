@@ -1,6 +1,6 @@
 module.exports = {
   auth: require('./auth'),
-  users: require('./users'),
-  projects: require('./projects'),
-  tools: require('./tools'),
+  users: require('./user'),
+  projects: require('./project'),
+  tools: require('./tool'),
 }
