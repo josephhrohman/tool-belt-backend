@@ -1,56 +1,69 @@
-const express = require("express")
-      router = express.Router()
-      db = require("../models");
+const express = require('express'),
+      router = express.Router(),
+      db = require('../models');
 
-router.get("/", (req, res) => {
-  db.Project.find({}, (err, allProjects) => {
-    if (err) res.send(err);
-    res.json(allProjects);
-  });
+router.get('/', async (req, res) => {
+  try {
+    const project = await db.Project.find({});
+      res.json({project});
+    } catch(err) {
+    console.log(err);
+    return res.status(500).json({status: 500, error: 'Something went wrong. Please try again'});
+  }
 });
 
-router.get("/:id", (req, res) => {
-    db.Project.findById(req.params.id, (err, foundProject) => {
-      if (err) res.send(err);
-      res.json(foundProject);
+router.get('/:_id', async (req, res) => {
+  try {
+    const project = await db.Project.findById(req.params._id, {});
+    if (!project) return res.status(404).json({status: 404, error: 'Project not found'});
+      res.json({project});
+  } catch(err) {
+    console.log(err);
+    return res.status(500).json({status: 500, error: 'Something went wrong. Please try again'});
+  }
+});
+
+router.post('/', (req, res) => {
+  const errors = [];
+
+  if (!req.body.title) errors.push({message: 'Please enter your name.'});
+  if (!req.body.image_url) errors.push({message: 'Please enter your email.'});
+  if (!req.body.description) errors.push({message: 'Please enter your password.'});
+
+  if (errors.length > 0) return res.status(400).send(errors);
+
+  const newProject = {
+    title: req.body.title,
+    image_url: req.body.image_url,
+    description: req.body.description,
+    // user_id: req.session.currentUser.id,
+  };
+
+  db.Project.create(newProject, (err, newProject) => {
+    if (err) return res.json({user: req.body, error: 'Something went wrong. Please try again.'});
+    return res.status(200).send('Project created successfully.');
     });
 });
 
-router.post("/", (req, res) => {
-  db.Project.findOne({ title: req.body.title }, (err, foundProject) => {
-    if (err) {
-      res.json({ err });
-    }
-    if (foundProject) {
-      res.json({message: "This project exists already."});
-    } else {
-      db.Project.create(req.body, (err, newProject) => {
-        if (err)
-          return res.json({project: req.body, error: "Could not create project."
-          });
-        res.json({message: "Project filed!", project: newProject});
-      });
-    };
-  });
+// DELETE Post Destroy Route
+router.delete('/:postId', async (req, res) => {
+  // if (!req.session.currentUser) {
+  //   return res.status(401).json({status: 401, error: 'Unauthorized. Please login and try again'});
+  // }
+  try {
+    const project = await db.Project.findById(req.params.postId);
+    const deletedPost = await project.deleteOne();
+    // if (post.user_id.toString() === req.session.currentUser) {
+    //   const deletedPost = await project.deleteOne();
+    //   res.sendStatus(200);
+    // }
+    // res.status(401).json({status: 401, error: 'Unauthorized. Please log in and try again'});
+    res.sendStatus(200);
+  } catch(err) {
+    console.log(err);
+    return res.status(500).json({status: 500, error: 'Something went wrong. Please try again'});
+  }
 });
 
-router.put("/:project", (req, res) => {
-  db.Project.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true },
-    (err, updatedProject) => {
-      if (err) res.send(err);
-      res.json(updatedProject);
-    }
-  );
-});
-
-router.delete("/:id", (req, res) => {
-  db.Project.findByIdAndDelete(req.params.id, (err, deletedProject) => {
-    if (err) res.send(err);
-    res.json(deletedProject);
-  });
-});
 
 module.exports = router;

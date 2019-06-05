@@ -4,12 +4,22 @@ const mongoose = require('mongoose'),
 const ToolSchema = new Schema ({
   title: String,
   image_url: String,
-  creation_date: {
-    type: Date,
-    default: Date.now
-  },
-  // Author?
+  description: String,
 });
 
 const Tool = mongoose.model('Tool', ToolSchema);
+
 module.exports= Tool;
+
+// user_id: {
+//   type: Schema.Types.ObjectId,
+//   ref: 'User'
+// },
+// step_id: {
+//   type: Schema.Types.ObjectId,
+//   ref: 'Step'
+// },
+// creation_date: {
+//   type: Date,
+//   default: Date.now
+// },

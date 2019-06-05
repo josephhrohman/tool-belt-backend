@@ -2,9 +2,8 @@ const mongoose = require('mongoose'),
       Schema = mongoose.Schema;
 
 const StepSchema = new Schema ({
-  title: String,
+  step: String,
   content: String,
-  
 });
 
 const Step = mongoose.model('Step', StepSchema);

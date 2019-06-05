@@ -25,7 +25,6 @@ router.post('/register', (req, res) => {
         const newUser = {
           name: req.body.name,
           email: req.body.email,
-          city: req.body.city,
           password: hash
         }
 
@@ -51,7 +50,7 @@ router.post('/login', (req, res) => {
 
     bcrypt.compare(req.body.password, foundUser.password, (err, isMatch) => {
       if (err) return res.status(400).send('There was a problem. Please try again.');
-
+      // console.log('Match', req.body.password)
       if (isMatch) {
         req.session.loggedIn = true;
         req.session.currentUser = {
@@ -59,6 +58,7 @@ router.post('/login', (req, res) => {
           name: foundUser.name,
           email: foundUser.email
         };
+        // console.log('SESSION = ', req.session);
         return res.send(foundUser._id);
       } else {
         return res.status(400).send('Username or password is incorrect.');

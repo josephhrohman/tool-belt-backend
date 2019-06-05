@@ -4,10 +4,19 @@ const mongoose = require('mongoose'),
 const ProjectSchema = new Schema ({
   title: String,
   image_url: String,
-  creation_date: {
-    type: Date,
-    default: Date.now
-  },
+  description: String,
+  // user_id: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'User'
+  // },
+  // tool_id: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Tool'
+  // },
+  // creation_date: {
+  //   type: Date,
+  //   default: Date.now
+  // },
 });
 
 const Project = mongoose.model('Project', ProjectSchema);
