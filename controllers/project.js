@@ -5,7 +5,7 @@ const express = require('express'),
 router.get('/', async (req, res) => {
   try {
     const project = await db.Project.find({});
-      res.json({project});
+      res.json(project);
     } catch(err) {
     console.log(err);
     return res.status(500).json({status: 500, error: 'Something went wrong. Please try again'});
@@ -16,7 +16,7 @@ router.get('/:_id', async (req, res) => {
   try {
     const project = await db.Project.findById(req.params._id, {});
     if (!project) return res.status(404).json({status: 404, error: 'Project not found'});
-      res.json({project});
+      res.json(project);
   } catch(err) {
     console.log(err);
     return res.status(500).json({status: 500, error: 'Something went wrong. Please try again'});
