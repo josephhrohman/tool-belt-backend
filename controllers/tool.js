@@ -4,9 +4,23 @@ const express = require('express'),
 
 router.get('/', async (req, res) => {
   try {
-    const tool = await db.Tool.find({});
-      res.json({tool});
+    const tool = await db.Tool.find({}).populate('user_id').populate('project_id');
+      res.json(tool);
     } catch(err) {
+    console.log(err);
+    return res.status(500).json({status: 500, error: 'Something went wrong. Please try again'});
+  }
+});
+
+router.get('/:_id', async (req, res) => {
+  try {
+    const tool = await db.Tool.findById(req.params._id, {})
+      .populate('user_id')
+      .populate('project_id')
+      .exec();
+    if (!tool) return res.status(404).json({status: 404, error: 'Tool not found'});
+      res.json(tool);
+  } catch(err) {
     console.log(err);
     return res.status(500).json({status: 500, error: 'Something went wrong. Please try again'});
   }
@@ -25,7 +39,7 @@ router.post('/', (req, res) => {
     title: req.body.title,
     image_url: req.body.image_url,
     description: req.body.description,
-    // user_id: req.session.currentUser.id,
+    user_id: req.session.currentUser.id,
   };
 
   db.Tool.create(newTool, (err, newTool) => {
@@ -33,6 +47,7 @@ router.post('/', (req, res) => {
     return res.status(200).send('Tool created successfully.');
     });
 });
+
 
 // DELETE Post Destroy Route
 router.delete('/:postId', async (req, res) => {

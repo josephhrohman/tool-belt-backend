@@ -5,18 +5,24 @@ const express = require('express'),
 router.get('/', async (req, res) => {
   try {
     const user = await db.User.find({}, {password: 0, __v: 0});
-      res.json({user});
+      res.json(user);
     } catch(err) {
     console.log(err);
     return res.status(500).json({status: 500, error: 'Something went wrong. Please try again'});
   }
 });
 
-router.get('/:_id', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
-    const user = await db.User.findById(req.params._id, {password: 0, __v: 0});
+    const user = await db.User.findById(req.params.userId, {password: 0, __v: 0});
     if (!user) return res.status(404).json({status: 404, error: 'User not found'});
       res.json({user});
+      
+    // const userPosts = await db.Posts.find({user_id: req.params.userId})
+    //   .populate({path: 'user_id', select: 'name'})  //In place oof getting back userId, name, email, date, etc.  Just get the Name from user_id
+    //   .exec();
+    // res.json({user, userPosts});
+
   } catch(err) {
     console.log(err);
     return res.status(500).json({status: 500, error: 'Something went wrong. Please try again'});
