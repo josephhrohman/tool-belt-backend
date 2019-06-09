@@ -4,7 +4,7 @@ const express = require('express'),
 
 router.get('/', async (req, res) => {
   try {
-    const project = await db.Project.find({}).populate('user_id').populate('tool_id').exec();;
+    const project = await db.Project.find({}).populate('user_id').exec();
       res.json(project);
     } catch(err) {
     console.log(err);
@@ -16,7 +16,6 @@ router.get('/:_id', async (req, res) => {
   try {
     const project = await db.Project.findById(req.params._id, {})
       .populate('user_id')
-      .populate('tool_id')
       .exec();
     if (!project) return res.status(404).json({status: 404, error: 'Project not found'});
       res.json(project);
