@@ -16,7 +16,6 @@ router.get('/:_id', async (req, res) => {
   try {
     const tool = await db.Tool.findById(req.params._id, {})
       .populate('user_id')
-      .populate('project_id')
       .exec();
     if (!tool) return res.status(404).json({status: 404, error: 'Tool not found'});
       res.json(tool);
@@ -28,16 +27,18 @@ router.get('/:_id', async (req, res) => {
 
 router.post('/', (req, res) => {
   const errors = [];
+
   if (!req.body.title) errors.push({message: 'Please enter a title.'});
   if (!req.body.image_url) errors.push({message: 'Please provide an image url.'});
   if (!req.body.description) errors.push({message: 'Please describe your tool.'});
+
   if (errors.length > 0) return res.status(400).send(errors);
 
   const newTool = {
     title: req.body.title,
     image_url: req.body.image_url,
     description: req.body.description,
-    user_id: req.session.currentUser.id,
+    user_id: req.session.currentUser
   };
 
   db.Tool.create(newTool, (err, newTool) => {

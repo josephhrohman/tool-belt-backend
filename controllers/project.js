@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
     title: req.body.title,
     image_url: req.body.image_url,
     description: req.body.description,
-    user_id: req.session.currentUser.id,
+    user_id: req.session.currentUser
   };
 
   db.Project.create(newProject, (err, newProject) => {
