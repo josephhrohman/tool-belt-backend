@@ -50,7 +50,6 @@ router.post('/login', (req, res) => {
 
     bcrypt.compare(req.body.password, foundUser.password, (err, isMatch) => {
       if (err) return res.status(400).send('There was a problem. Please try again.');
-      // console.log('Match', req.body.password)
       if (isMatch) {
         req.session.loggedIn = true;
         req.session.currentUser = {
@@ -58,7 +57,6 @@ router.post('/login', (req, res) => {
           name: foundUser.name,
           email: foundUser.email
         };
-        // console.log('SESSION = ', req.session);
         return res.send(foundUser._id);
       } else {
         return res.status(400).send('Username or password is incorrect.');
@@ -70,6 +68,7 @@ router.post('/login', (req, res) => {
 router.post('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) return res.status(400).send('Username or password is incorrect.');
+    res.clearCookie('connect.sid').json({status: 200, message: 'Logout successful'});
   });
 });
 

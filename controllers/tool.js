@@ -4,7 +4,7 @@ const express = require('express'),
 
 router.get('/', async (req, res) => {
   try {
-    const tool = await db.Tool.find({}).populate('user_id').populate('project_id');
+    const tool = await db.Tool.find({}).populate('user_id');
       res.json(tool);
     } catch(err) {
     console.log(err);
@@ -28,11 +28,9 @@ router.get('/:_id', async (req, res) => {
 
 router.post('/', (req, res) => {
   const errors = [];
-
-  if (!req.body.title) errors.push({message: 'Please enter your name.'});
-  if (!req.body.image_url) errors.push({message: 'Please enter your email.'});
-  if (!req.body.description) errors.push({message: 'Please enter your password.'});
-
+  if (!req.body.title) errors.push({message: 'Please enter a title.'});
+  if (!req.body.image_url) errors.push({message: 'Please provide an image url.'});
+  if (!req.body.description) errors.push({message: 'Please describe your tool.'});
   if (errors.length > 0) return res.status(400).send(errors);
 
   const newTool = {
@@ -47,7 +45,6 @@ router.post('/', (req, res) => {
     return res.status(200).send('Tool created successfully.');
     });
 });
-
 
 // DELETE Post Destroy Route
 router.delete('/:postId', async (req, res) => {

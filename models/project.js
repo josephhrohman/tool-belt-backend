@@ -9,10 +9,6 @@ const ProjectSchema = new Schema ({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  tool_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'Tool'
-  },
   creation_date: {
     type: Date,
     default: Date.now
@@ -21,3 +17,8 @@ const ProjectSchema = new Schema ({
 
 const Project = mongoose.model('Project', ProjectSchema);
 module.exports= Project;
+
+// tool_id: {
+//   type: Schema.Types.ObjectId,
+//   ref: 'Tool'
+// },
