@@ -1,9 +1,11 @@
 # Tool Belt
 **The What**
+<br/>
 *Tool Belt is a web-based application that provides a space for builders, crafters, and inventors to share their
 wisdom of tricks and solutions they've come across in different projects.*
 
 **The Why**
+<br/>
 *For the beginner - it can be excessively daunting to start building something or think of a project they want to do 
 because they aren't sure they have the tools of skills necessary to complete the project. 
 <br/>
