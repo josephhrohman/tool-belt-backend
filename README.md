@@ -47,7 +47,15 @@ more creative ways to do the same things.*
     "react-scripts": "3.0.1"
 ```
 
-# tool-belt-backend
+# Installation Steps:
+- Fork my github repo
+- git clone the repo into your local machine
+- npm i
+- *Frontend* : run npm start
+- *Backend* : run mongod
+- *Backend* : run nodemon
+
+# Tool-Belt-Backend
 
 # API Endpoints
 
