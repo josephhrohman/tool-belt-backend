@@ -53,7 +53,6 @@ more creative ways to do the same things.*
 - git clone the repo into your local machine
 - npm i
 - Run npm start
-<br/>
 *Backend*
 - Fork my github repo
 - git clone the repo into your local machine
