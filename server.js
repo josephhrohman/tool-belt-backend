@@ -19,13 +19,13 @@ app.use(session({
       saveUninitialized: false}));
       
 const corsOptions = {
-      origin: ['https://toolbelt-frontend.herokuapp.com/'],
+      origin: ['http://localhost:3000/'],
       credentials: true,
       optionsSuccessStatus: 200
       };
 
 // app.use(cors(corsOptions));
-app.options('https://toolbelt-frontend.herokuapp.com/', cors());
+app.options('http://localhost:3000/', cors());
 app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({extended: false}));
