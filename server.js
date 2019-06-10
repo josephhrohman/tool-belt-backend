@@ -23,6 +23,9 @@ const corsOptions = {
       credentials: true,
       optionsSuccessStatus: 200
       };
+
+// app.use(cors(corsOptions));
+app.options('https://toolbelt-frontend.herokuapp.com/', cors());
 app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({extended: false}));
