@@ -5,6 +5,7 @@ const ToolSchema = new Schema ({
   title: String,
   image_url: String,
   description: String,
+  rating: Number,
   toolBelt: String,
   category: String,
   user: String,
