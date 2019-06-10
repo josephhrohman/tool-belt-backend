@@ -48,12 +48,18 @@ more creative ways to do the same things.*
 ```
 
 # Installation Steps:
+*Frontend*
 - Fork my github repo
 - git clone the repo into your local machine
 - npm i
-- *Frontend* : run npm start
-- *Backend* : run mongod
-- *Backend* : run nodemon
+- Run npm start
+<br/>
+*Backend*
+- Fork my github repo
+- git clone the repo into your local machine
+- npm i
+- Run mongod
+- *Second-Window* Run nodemon
 
 # Tool-Belt-Backend
 
