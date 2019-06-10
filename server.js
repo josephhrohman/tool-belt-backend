@@ -19,13 +19,10 @@ app.use(session({
       saveUninitialized: false}));
       
 const corsOptions = {
-      origin: ['http://localhost:3000/'],
-      credentials: true,
-      optionsSuccessStatus: 200
+      origin: ['http://localhost:3000'],
+      credentials: true, //this sends the cookie in the header if true
+      optionsSuccessStatus: 200 //for smart devises and super old OSs (legacy browsers)
       };
-
-// app.use(cors(corsOptions));
-app.options('http://localhost:3000/', cors());
 app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({extended: false}));
