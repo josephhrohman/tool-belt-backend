@@ -4,7 +4,7 @@ const express = require('express'),
 
 router.get('/', async (req, res) => {
   try {
-    const tool = await db.Tool.find({}).populate('user_id');
+    const tool = await db.Tool.find({}).populate('user_id').exec();
       res.json(tool);
     } catch(err) {
     console.log(err);
@@ -38,6 +38,9 @@ router.post('/', (req, res) => {
     title: req.body.title,
     image_url: req.body.image_url,
     description: req.body.description,
+    toolBelt: 'False',
+    category: req.body.category,
+    user: req.body.user,
     user_id: req.session.currentUser
   };
 
