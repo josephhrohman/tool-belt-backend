@@ -47,16 +47,16 @@ more creative ways to do the same things.*
     "react-scripts": "3.0.1"
 ```
 
-# Installation Steps:
-*Frontend*
+# Frontend Installation
 - Fork my github repo
-- git clone the repo into your local machine
-- npm i
+- Git clone the repo into your local machine
+- Npm i
 - Run npm start
-*Backend*
+
+# Backend Installation
 - Fork my github repo
-- git clone the repo into your local machine
-- npm i
+- Git clone the repo into your local machine
+- Npm i
 - Run mongod
 - *Second-Window* Run nodemon
 
