@@ -66,14 +66,26 @@ more creative ways to do the same things.*
 # ERD
 ![ERD](imgs/ERD.png)
 
+# User Stories:
+**User 1**<br/>
+*I am new to crafting.  I want to see a website / community where it isn't assumed I know how to build things or*
+*that I have the tools necessary to build things*
+
+**User 2**<br/>
+*I am a moderate crafter, I have some tools, but I don't know what tool I should get next.*
+
+**User 3**<br/>
+*I've been building, crafting, inventing, all my life and I've learned so many ways to do the same thing with different tools.*
+*At this point, I believe I could help other's start building and be successful - every project can be done differently.*
+
 # Unresolved Problems:
 - Heroku build is not currently working with CORS
 - Local build forces you to restart nodemon once signed in, in order to post to mongoDB
 - user_id object not associating to projects / tools
 
 # Future Features:
-- *Next Best Tool* this will give you a list of the most-used tool you do not currently have.
-- *Alternative Tool* this will give you a full workup of an alternative tool you can use to accomplish the same 
+- **'Next Best Tool'** this will give you a list of the most-used tool you do not currently have.
+- **'Alternative Tool'** this will give you a full workup of an alternative tool you can use to accomplish the same 
 process (eg: saw vs chisel to cut wood) and it's effectiveness in time, qualtiy, ease of use, etc. 
 
 # Tool-Belt-Backend
