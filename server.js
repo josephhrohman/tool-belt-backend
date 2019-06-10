@@ -2,7 +2,6 @@ const express = require('express'),
       session = require('express-session'),
       bodyParser = require('body-parser'),
       helmet = require('helmet');
-      // multer = require('multer'),
       cors = require('cors'),
       PORT = process.env.PORT || 4000,
       app = express();
@@ -20,9 +19,9 @@ app.use(session({
       saveUninitialized: false}));
       
 const corsOptions = {
-      origin: ['http://localhost:3000'],
-      credentials: true, //this sends the cookie in the header if true
-      optionsSuccessStatus: 200 //for smart devises and super old OSs (legacy browsers)
+      origin: ['https://toolbelt-frontend.herokuapp.com/'],
+      credentials: true,
+      optionsSuccessStatus: 200
       };
 app.use(cors(corsOptions));
 
