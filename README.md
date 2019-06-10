@@ -60,6 +60,14 @@ more creative ways to do the same things.*
 - Run mongod
 - *Second-Window* Run nodemon
 
+# Wire Frames
+![Wire Frames](imgs/WireFrames.png)
+
+# ERD
+![ERD](imgs/ERD.png)
+
+
+
 # Tool-Belt-Backend
 
 # API Endpoints
