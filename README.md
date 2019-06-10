@@ -72,8 +72,8 @@ more creative ways to do the same things.*
 - user_id object not associating to projects / tools
 
 # Future Features:
-- ** *Next Best Tool* ** this will give you a list of the most-used tool you do not currently have.
-- ** *Alternative Tool* ** this will give you a full workup of an alternative tool you can use to accomplish the same 
+- *Next Best Tool* this will give you a list of the most-used tool you do not currently have.
+- *Alternative Tool* this will give you a full workup of an alternative tool you can use to accomplish the same 
 process (eg: saw vs chisel to cut wood) and it's effectiveness in time, qualtiy, ease of use, etc. 
 
 # Tool-Belt-Backend
